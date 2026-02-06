@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet: Journey of Cheese and Bread</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+            color: #333;
+        }
+        
+        /* Interactive Blank Styling */
+        .blank {
+            border-bottom: 2px solid #333;
+            display: inline-block;
+            min-width: 120px; /* Increased default width */
+            padding: 0 10px;  /* Added padding inside blank */
+            margin: 4px 6px;  /* Added margin around blank */
+            cursor: pointer;
+            color: transparent; /* Hidden by default */
+            transition: all 0.2s;
+            font-weight: bold;
+            text-align: center;
+            line-height: 2.2; /* Increased vertical spacing */
+        }
+
+        .blank:hover {
+            background-color: #f0f9ff;
+        }
+
+        /* Mode: Show All Answers */
+        body.show-answers .blank {
+            color: #dc2626; /* Red text */
+            border-bottom-color: #dc2626;
+            cursor: default;
+        }
+
+        /* Mode: Interactive (Click to Reveal) */
+        body.interactive .blank.revealed {
+            color: #2563eb; /* Blue text */
+            border-bottom-color: #2563eb;
+        }
+
+        /* Print optimizations */
+        @media print {
+            body { -webkit-print-color-adjust: exact; padding: 0; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            
+            /* Ensure blanks look like lines in print */
+            .blank { 
+                color: transparent !important; 
+                border-bottom: 1px solid black !important;
+                background-color: transparent !important;
+                min-width: 150px; /* Even longer for handwriting */
+                margin-bottom: 8px; /* Extra vertical space for writing */
+            }
+            
+            /* If teacher prints key, show answers */
+            body.show-answers .blank {
+                color: black !important;
+            }
+
+            /* Force Part 0 to stay horizontal in print */
+            .flow-container {
+                flex-wrap: nowrap !important;
+            }
+        }
+
+        .input-header {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            width: 100%;
+            height: 1.5em;
+        }
+    </style>
+</head>
+<body class="p-8 max-w-6xl mx-auto interactive">
+
+    <!-- CONTROL PANEL (Hidden in Print) -->
+    <div class="no-print fixed top-0 left-0 w-full bg-slate-800 text-white p-4 shadow-lg z-50 flex justify-between items-center">
+        <div class="font-bold text-lg">Teacher Controls</div>
+        <div class="flex gap-4">
+            <button onclick="setMode('student')" class="bg-white text-slate-800 px-4 py-2 rounded hover:bg-slate-200 transition font-bold">
+                👨‍🎓 Student Mode (Blank)
+            </button>
+            <button onclick="setMode('interactive')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition font-bold">
+                👆 Interactive (Click to Reveal)
+            </button>
+            <button onclick="setMode('key')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition font-bold">
+                🔑 Answer Key
+            </button>
+            <button onclick="window.print()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition font-bold flex items-center gap-2">
+                🖨️ Print / Save as PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Spacer for fixed header -->
+    <div class="no-print h-20"></div>
+
+    <!-- NEW WORKSHEET HEADER -->
+    <header class="mb-10 font-serif">
+        <div class="flex justify-between text-base font-bold border-b-2 border-black pb-2 mb-6">
+            <div>Caritas Wu Cheng-chung College 2025-2026</div>
+            <div>S3 Biology</div>
+        </div>
+        
+        <div class="text-center space-y-2">
+            <h3 class="text-xl tracking-wide">7.1 - 7.5 Revision worksheet</h3>
+            <h1 class="text-5xl font-bold text-slate-900 mt-2 leading-tight">Journey<br>of Cheese and Bread</h1>
+        </div>
+
+        <div class="flex gap-8 text-sm mt-8 font-sans">
+            <div class="flex-1">Name: <div class="input-header"></div></div>
+            <div class="w-32">Date: <div class="input-header"></div></div>
+            <div class="w-32">Class: <div class="input-header"></div></div>
+        </div>
+    </header>
+
+    <!-- Introduction Scenario -->
+    <section class="bg-blue-50 border border-blue-200 p-6 rounded-lg mb-8 shadow-sm">
+        <h2 class="text-xl font-bold text-blue-800 mb-2">Scenario: The Meal</h2>
+        <div class="flex items-center gap-4">
+            <div class="text-5xl">🧑🥪</div>
+            <div>
+                <p class="text-lg text-slate-700">
+                    A hungry student is eating a <strong>Cheese Sandwich</strong> (Bread with Swiss Cheese).
+                </p>
+                <p class="text-sm text-slate-600 mt-1">
+                    This meal provides a mix of nutrients: <strong>Starch</strong> (from the Bread), and <strong>Protein & Fats</strong> (from the Cheese). We will follow the journey of this sandwich through the human digestive system.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 0: The Flow -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-green-600 mb-6">Part 0: The Path of Food</h2>
+        <p class="mb-4">Fill in the order of organs that food passes through:</p>
+        <div class="flow-container flex items-center justify-between text-base md:text-lg font-bold flex-nowrap gap-2 bg-slate-50 p-4 rounded border border-slate-300 overflow-x-auto print:overflow-visible">
+            <div class="bg-white p-2 border rounded shadow-sm whitespace-nowrap">Mouth Cavity</div>
+            <div class="text-xl text-slate-400">→</div>
+            <span class="blank w-32" data-answer="Oesophagus"></span>
+            <div class="text-xl text-slate-400">→</div>
+            <span class="blank w-32" data-answer="Stomach"></span>
+            <div class="text-xl text-slate-400">→</div>
+            <span class="blank w-40" data-answer="Small Intestine"></span>
+            <div class="text-xl text-slate-400">→</div>
+            <span class="blank w-40" data-answer="Large Intestine"></span>
+        </div>
+    </section>
+
+    <!-- Part 1: Teeth -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-slate-600 mb-6">Part 1: Mechanical Digestion (Teeth)</h2>
+        <div class="grid grid-cols-3 gap-8 mb-8">
+            <div class="border border-slate-300 rounded p-6 bg-slate-50 flex flex-col h-full">
+                <h3 class="font-bold text-lg mb-2 text-center">Incisors</h3>
+                <p class="text-sm font-semibold mb-auto">Function:</p>
+                <div class="mt-4"><span class="blank w-full" data-answer="Biting / Cutting"></span></div>
+            </div>
+            <div class="border border-slate-300 rounded p-6 bg-slate-50 flex flex-col h-full">
+                <h3 class="font-bold text-lg mb-2 text-center">Canines</h3>
+                <p class="text-sm font-semibold mb-auto">Function:</p>
+                <div class="mt-4"><span class="blank w-full" data-answer="Tearing flesh"></span></div>
+            </div>
+            <div class="border border-slate-300 rounded p-6 bg-slate-50 flex flex-col h-full">
+                <h3 class="font-bold text-lg mb-2 text-center">Molars</h3>
+                <p class="text-sm font-semibold mb-auto">Function:</p>
+                <div class="mt-4"><span class="blank w-full" data-answer="Grinding / Crushing"></span></div>
+            </div>
+        </div>
+
+        <div class="space-y-6 bg-slate-50 p-6 border border-slate-200 rounded">
+            <div>
+                <p class="font-medium text-lg mb-2">1. What is the hardest part of the teeth?</p>
+                <span class="blank w-1/2" data-answer="Enamel"></span>
+            </div>
+            <div>
+                <p class="font-medium text-lg mb-2">2. Why would you feel tooth pain if the enamel is eroded?</p>
+                <div class="leading-loose">
+                    Because the <span class="blank" data-answer="Dentine / Pulp"></span> containing <span class="blank" data-answer="Nerves"></span> is exposed / less protected.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 2: Food Source -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-orange-500 mb-6">Part 2: The Cheese (Nutrients)</h2>
+        <div class="flex gap-6 items-start">
+            <div class="text-6xl border p-4 rounded bg-yellow-50">🧀</div>
+            <div class="flex-1 space-y-4">
+                <p class="font-medium text-lg">1. Identify the two main nutrients found in cheese.</p>
+                <div class="grid grid-cols-2 gap-4 text-lg">
+                    <label class="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" class="w-6 h-6"> Carbohydrate (Starch)</label>
+                    <label class="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" class="w-6 h-6"> Lipids (Fats)</label>
+                    <label class="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" class="w-6 h-6"> Protein</label>
+                    <label class="flex items-center gap-2 p-2 border rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" class="w-6 h-6"> Fibre</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 3: Lipids Table -->
+    <section class="mb-10">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-yellow-500 mb-6">Part 3: Digestion of LIPIDS (Cheese Fats)</h2>
+        <table class="w-full border-collapse border border-slate-400 mb-8 shadow-sm">
+            <thead>
+                <tr class="bg-slate-800 text-white">
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Organ</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Juice / Environment</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Physical Digestion</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Enzyme(s) Present</th>
+                    <th class="border border-slate-500 p-3 text-left">Chemical Digestion (Reaction)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="h-24 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Mouth</td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Saliva"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Chewing"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="None"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="None"></span></td>
+                </tr>
+                <tr class="h-24 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Stomach</td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Gastric Juice"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Churning"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="None"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="No significant digestion"></span></td>
+                </tr>
+                <tr class="h-56 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Small Intestine</td>
+                    <td class="border border-slate-300 p-3 space-y-6">
+                        <p>1. <span class="blank w-full" data-answer="Pancreatic Juice"></span></p>
+                        <div class="bg-yellow-50 p-3 border border-yellow-200 rounded">
+                            <strong>2. <span class="blank" data-answer="Bile"></span></strong><br>
+                            <div class="mt-2 text-xs">Produced: <span class="blank" data-answer="Liver"></span></div>
+                            <div class="mt-2 text-xs">Stored: <span class="blank" data-answer="Gall bladder"></span></div>
+                        </div>
+                    </td>
+                    <td class="border border-slate-300 p-3">
+                        1. <span class="blank w-full" data-answer="Emulsification by Bile"></span><br><br>
+                        2. <span class="blank w-full" data-answer="Peristalsis"></span>
+                    </td>
+                    <td class="border border-slate-300 p-3 align-middle">
+                        <span class="blank" data-answer="Lipase"></span>
+                    </td>
+                    <td class="border border-slate-300 p-3">
+                        Lipids (Fats) → <span class="blank" data-answer="Fatty Acids"></span> + Glycerol
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="bg-slate-50 p-6 border border-slate-300 rounded mb-6">
+            <p class="font-bold text-lg mb-2">Critical Thinking:</p>
+            <p class="mb-4 text-lg">What happens if the bile duct is blocked?</p>
+            <div class="leading-loose">
+                Fats will not be <span class="blank w-1/3" data-answer="emulsified"></span>, so digestion by lipase will be extremely <span class="blank w-1/4" data-answer="slow"></span>.
+            </div>
+        </div>
+
+        <!-- HCl Question -->
+        <div class="bg-slate-50 p-6 border border-slate-300 rounded">
+            <p class="font-bold text-lg mb-2">Question regarding the Stomach:</p>
+            <p class="mb-4 text-lg">What is the function of Hydrochloric Acid in the gastric juice?</p>
+            <div class="leading-loose">
+                1. To kill <span class="blank w-1/3" data-answer="bacteria / pathogens"></span> in food.<br>
+                2. To provide an acidic pH for <span class="blank w-1/3" data-answer="protease / pepsin"></span> to work.
+            </div>
+        </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <!-- Part 4: Protein Table -->
+    <section class="mb-10 mt-10">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-red-600 mb-6">Part 4: Digestion of PROTEIN (Cheese Protein) 🧀</h2>
+        <table class="w-full border-collapse border border-slate-400 mb-8 shadow-sm">
+            <thead>
+                <tr class="bg-slate-800 text-white">
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Organ</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Juice / Environment</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Physical Digestion</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Enzyme(s) Present</th>
+                    <th class="border border-slate-500 p-3 text-left">Chemical Digestion (Reaction)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="h-24 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Mouth</td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Saliva"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Chewing"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="None"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="None"></span></td>
+                </tr>
+                <tr class="h-32 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Stomach</td>
+                    <td class="border border-slate-300 p-3">
+                        <span class="blank w-full" data-answer="Gastric Juice"></span><br>
+                        (<span class="blank" data-answer="Acidic"></span> pH)
+                    </td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Churning"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank" data-answer="Protease (Pepsin)"></span></td>
+                    <td class="border border-slate-300 p-3">
+                        Protein → <span class="blank" data-answer="Polypeptides"></span>
+                    </td>
+                </tr>
+                <tr class="h-32 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Small Intestine</td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Pancreatic Juice"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Peristalsis"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank" data-answer="Protease (Trypsin)"></span></td>
+                    <td class="border border-slate-300 p-3">
+                        Polypeptides → <span class="blank" data-answer="Amino Acids"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="space-y-6 bg-slate-50 p-6 border border-slate-200 rounded">
+            <div>
+                <p class="font-medium text-lg mb-2">1. How does hydrochloric acid help in the digestion of protein?</p>
+                <div class="leading-loose">
+                    It <span class="blank w-1/4" data-answer="denatures"></span> protein and provides an <span class="blank" data-answer="optimal pH"></span> for enzymes.
+                </div>
+            </div>
+            <div>
+                <p class="font-medium text-lg mb-2">2. What will happen if the pancreatic duct is blocked?</p>
+                <div class="leading-loose">
+                    Pancreatic juice (containing enzymes) cannot reach the <span class="blank" data-answer="small intestine"></span>. Digestion will be incomplete.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 5: Starch Table -->
+    <section class="mb-10">
+        <h2 class="text-xl font-bold bg-slate-100 p-2 border-l-4 border-amber-600 mb-6">Part 5: Digestion of STARCH (Bread) 🍞</h2>
+        <table class="w-full border-collapse border border-slate-400 mb-8 shadow-sm">
+            <thead>
+                <tr class="bg-slate-800 text-white">
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Organ</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Juice / Environment</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Physical Digestion</th>
+                    <th class="border border-slate-500 p-3 text-left w-1/6">Enzyme(s) Present</th>
+                    <th class="border border-slate-500 p-3 text-left">Chemical Digestion (Reaction)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="h-32 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Mouth</td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Saliva"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Chewing"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank" data-answer="Salivary Amylase"></span></td>
+                    <td class="border border-slate-300 p-3">
+                        Starch → <span class="blank" data-answer="Maltose"></span>
+                    </td>
+                </tr>
+                <tr class="h-32 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Stomach</td>
+                    <td class="border border-slate-300 p-3">
+                        <span class="blank w-full" data-answer="Gastric Juice"></span><br>
+                        (<span class="blank" data-answer="Acidic"></span> pH)
+                    </td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Churning"></span></td>
+                    <td class="border border-slate-300 p-3"><span class="blank" data-answer="Amylase denatures"></span></td>
+                    <td class="border border-slate-300 p-3">
+                        <span class="text-red-600 font-bold">DIGESTION STOPS</span><br>
+                        Why? <span class="blank w-full mt-2" data-answer="Acid denatures amylase"></span>
+                    </td>
+                </tr>
+                <tr class="h-48 hover:bg-slate-50">
+                    <td class="border border-slate-300 p-3 font-bold bg-slate-50">Small Intestine</td>
+                    <td class="border border-slate-300 p-3 space-y-4">
+                        1. <span class="blank w-full" data-answer="Pancreatic Juice"></span><br>
+                        2. <span class="blank w-full" data-answer="Surface of epithelial cells"></span>
+                    </td>
+                    <td class="border border-slate-300 p-3"><span class="blank w-full" data-answer="Peristalsis"></span></td>
+                    <td class="border border-slate-300 p-3">
+                        1. <span class="blank" data-answer="Pancreatic Amylase"></span><br><br>
+                        2. <span class="blank" data-answer="Maltase"></span>
+                    </td>
+                    <td class="border border-slate-300 p-3">
+                        <div class="mb-4">1. Starch → <span class="blank" data-answer="Maltose"></span></div>
+                        <div>2. Maltose → <span class="blank" data-answer="Glucose"></span></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="space-y-6 bg-slate-50 p-6 border border-slate-200 rounded">
+            <div>
+                <p class="font-medium text-lg mb-2">1. Which two juices have amylase?</p>
+                <div class="leading-loose">
+                    <span class="blank w-1/3" data-answer="Saliva"></span> and <span class="blank w-1/3" data-answer="Pancreatic Juice"></span>.
+                </div>
+            </div>
+            <div>
+                <p class="font-medium text-lg mb-2">2. Name one more polysaccharide beside starch.</p>
+                <span class="blank w-1/2" data-answer="Glycogen / Cellulose"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center text-slate-500 text-sm mt-12 mb-8 no-print">
+        Biology Department | Caritas Wu Cheng-chung College
+    </footer>
+
+    <script>
+        function setMode(mode) {
+            const body = document.body;
+            body.classList.remove('interactive', 'show-answers');
+            
+            // Reset all blanks
+            document.querySelectorAll('.blank').forEach(el => {
+                el.innerText = el.getAttribute('data-answer');
+                el.classList.remove('revealed');
+            });
+
+            if (mode === 'student') {
+                // Clear text for blank printing
+                document.querySelectorAll('.blank').forEach(el => el.innerText = '');
+            } else if (mode === 'key') {
+                body.classList.add('show-answers');
+            } else if (mode === 'interactive') {
+                body.classList.add('interactive');
+                // Hide text initially for interactive mode
+                document.querySelectorAll('.blank').forEach(el => el.innerText = '');
+                
+                // Add click listeners
+                document.querySelectorAll('.blank').forEach(el => {
+                    el.onclick = function() {
+                        if (body.classList.contains('interactive')) {
+                            this.innerText = this.getAttribute('data-answer');
+                            this.classList.add('revealed');
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize in student mode
+        setMode('student');
+    </script>
+
+</body>
+</html>
